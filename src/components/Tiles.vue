@@ -26,9 +26,16 @@
           <div class="col-12 col-md-6">
             <div class="d-flex flex-row justify-content-between">
               <h1>{{ modalData.name }}</h1>
-              <span class="align-self-center">Rating: {{ modalData.rating.average }}</span>
+              <span
+                class="align-self-center showRating"
+                :data-rating="modalData.rating.average"
+                :class="classObject()"
+              >Rating: {{ modalData.rating.average }}</span>
             </div>
-            <p>Premiered: {{ modalData.premiered }}</p>
+            <div class="d-flex flex-row justify-content-between">
+              <p class="align-self-center">Premiere: {{ modalData.premiered }}</p>
+              <p class="align-self-center">Language: {{ modalData.language }}</p>
+            </div>
             <p>
               Genre:
               <span v-for="(genre, index) in modalData.genres" :key="genre">
@@ -36,8 +43,11 @@
                 <span v-if="index < modalData.genres.length-1">/</span>
               </span>
             </p>
-            <p>Premiered: {{ modalData.premiered }}</p>
-            <p>Premiered: {{ modalData.premiered }}</p>
+            <p v-html="modalData.summary" />
+            <a
+              :href="'https://www.imdb.com/title/'+ modalData.externals.imdb"
+              target="_blank"
+            >Zobacz na IMDB</a>
           </div>
         </div>
       </div>
@@ -46,6 +56,7 @@
 </template>
 
 <script>
+// import Modal from "./Modal.vue";
 export default {
   name: "Tiles",
   props: ["shows"],
@@ -60,9 +71,17 @@ export default {
     setTiles() {
       console.log(this.singleResult);
     },
-    isTileVisible(el) {
-      console.log(el);
-      return true;
+    classObject() {
+      if (this.modalData.rating.average < 5) {
+        return "poor";
+      } else if (
+        this.modalData.rating.average > 5 &&
+        this.modalData.rating.average < 7.5
+      ) {
+        return "avg";
+      } else {
+        return "good";
+      }
     },
     showMore(id) {
       return fetch("https://api.tvmaze.com/shows/" + id)
@@ -71,6 +90,7 @@ export default {
           this.modalData = data;
           console.log(data);
           this.$nextTick(() => {
+            this.showModal = true;
             this.$refs["my-modal"].show();
           });
         });
@@ -105,8 +125,31 @@ export default {
       }
     }
   }
+
   .cursor-pointer {
     cursor: pointer;
+  }
+}
+.showRating {
+  display: inline-block;
+  &:before {
+    content: "\2605";
+    font-size: 24px;
+  }
+  &.poor {
+    &:before {
+      color: red;
+    }
+  }
+  &.avg {
+    &:before {
+      color: orange;
+    }
+  }
+  &.good {
+    &:before {
+      color: green;
+    }
   }
 }
 </style>
