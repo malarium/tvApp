@@ -17,6 +17,8 @@
         </b-card-text>
       </b-card>
     </div>
+
+    <!-- Modal z dodatkową zawartością -->
     <b-modal v-if="modalData" size="xl" ref="my-modal" title hide-footer scrollable>
       <div class="container-fluid">
         <div class="row">
@@ -30,14 +32,23 @@
                 class="align-self-center showRating"
                 :data-rating="modalData.rating.average"
                 :class="classObject()"
-              >Rating: {{ modalData.rating.average || 'none' }}</span>
+              >
+                <b>Rating:</b>
+                {{ modalData.rating.average || 'none' }}
+              </span>
             </div>
             <div class="d-flex flex-row justify-content-between">
-              <p class="align-self-center">Premiere: {{ modalData.premiered }}</p>
-              <p class="align-self-center">Language: {{ modalData.language }}</p>
+              <p class="align-self-center">
+                <b>Premiere:</b>
+                {{ modalData.premiered }}
+              </p>
+              <p class="align-self-center">
+                <b>Language:</b>
+                {{ modalData.language }}
+              </p>
             </div>
             <p>
-              Genre:
+              <b>Genre:</b>
               <span v-for="(genre, index) in modalData.genres" :key="genre">
                 {{ genre }}
                 <span v-if="index < modalData.genres.length-1">/</span>
@@ -47,8 +58,10 @@
             <a
               :href="'https://www.imdb.com/title/'+ modalData.externals.imdb"
               target="_blank"
-            >Zobacz na IMDB</a>
+              class="mb-2 d-inline-block IMDB"
+            >Zobacz na IMDb</a>
 
+            <!-- Rozwijane informacje -->
             <div role="tablist">
               <b-card no-body class="mb-1">
                 <b-card-header
@@ -57,27 +70,27 @@
                   role="tab"
                   @click="getCastInfo($event, modalData.id)"
                 >
-                  <b-button block v-b-toggle.accordion-1 variant="info">CAST</b-button>
+                  <b-button block v-b-toggle.accordion-1 variant="light">CAST</b-button>
                 </b-card-header>
-                <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel">
-                  <b-card-body>
-                    <b-card-text v-for="castSingle of castInfo" :key="castSingle.id">
-                      <div class="row">
-                        <figure class="col-6">
-                          <img
-                            class="img-fluid"
-                            style="max-width:90px;"
-                            :src="castSingle.character.image.medium"
-                          />
-                          <figcaption>{{ castSingle.character.name }}</figcaption>
-                        </figure>
-                        <div class="col-6">
+                <b-collapse
+                  id="accordion-1"
+                  accordion="my-accordion"
+                  role="tabpanel"
+                  class="accordion-tabpanel"
+                >
+                  <b-card-body class="row flex-nowrap mx-0">
+                    <b-card-text class="col-6" v-for="castSingle of castInfo" :key="castSingle.id">
+                      <figure>
+                        <img class="img-fluid" :src="getCharacterImage(castSingle)" />
+                        <figcaption class="text-center">
                           <a
                             :href="castSingle.person.url"
                             target="_blank"
+                            class="text-center d-inline-block w-100 mt-2 character-actor"
                           >{{ castSingle.person.name }}</a>
-                        </div>
-                      </div>
+                        </figcaption>
+                      </figure>
+                      <p class="text-center character-name">{{ castSingle.character.name }}</p>
                     </b-card-text>
                   </b-card-body>
                 </b-collapse>
@@ -90,11 +103,23 @@
                   role="tab"
                   @click="getCrewInfo($event, modalData.id)"
                 >
-                  <b-button block v-b-toggle.accordion-2 variant="info">CREW</b-button>
+                  <b-button block v-b-toggle.accordion-2 variant="light">CREW</b-button>
                 </b-card-header>
-                <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-                  <b-card-body>
-                    <b-card-text>{{ crewInfo }}</b-card-text>
+                <b-collapse
+                  id="accordion-2"
+                  accordion="my-accordion"
+                  role="tabpanel"
+                  class="accordion-tabpanel"
+                >
+                  <b-card-body class="row flex-nowrap mx-0">
+                    <b-card-text class="col-6" v-for="crewPerson in crewInfo" :key="crewPerson.id">
+                      <p class="text-center">{{ crewPerson.type }}</p>
+                      <a
+                        :href="crewPerson.person.url"
+                        target="_blank"
+                        class="text-center d-inline-block w-100 mt-2 character-crewMember"
+                      >{{ crewPerson.person.name }}</a>
+                    </b-card-text>
                   </b-card-body>
                 </b-collapse>
               </b-card>
@@ -171,6 +196,9 @@ export default {
             this.crewInfo = data;
           });
       }
+    },
+    getCharacterImage(data) {
+      return data?.character?.image?.medium || "/assets/logo.png";
     }
   }
 };
@@ -206,6 +234,9 @@ export default {
     cursor: pointer;
   }
 }
+.accordion-tabpanel {
+  overflow-x: auto;
+}
 .showRating {
   display: inline-block;
   &:before {
@@ -231,6 +262,17 @@ export default {
     &:before {
       content: "\2606";
     }
+  }
+}
+.IMDB {
+  background-color: #efc200;
+  font-weight: bold;
+  color: black;
+  padding: 10px 20px;
+  &:link,
+  &:hover,
+  &:visited {
+    text-decoration: none;
   }
 }
 </style>
