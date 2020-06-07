@@ -22,19 +22,18 @@ export default {
   data: () => {
     return {
       showsAll: []
-    }
+    };
   },
   methods: {
     getShowsList() {
       return fetch("https://api.tvmaze.com/shows")
-      .then(blob => blob.json())
-      .then(data => this.showsAll = data)
+        .then(blob => blob.json())
+        .then(data => (this.showsAll = data));
     }
   },
   beforeMount() {
-    this.getShowsList()
-  },
-
+    this.getShowsList();
+  }
 };
 </script>
 
