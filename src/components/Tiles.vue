@@ -3,7 +3,7 @@
     <div v-for="show in shows" :key="show.id" class="p-2 card-whole">
       <b-card
         :title="show.name"
-        :img-src="show.image.medium || null"
+        :img-src="getCharacterImage(show)"
         :img-alt="show.name"
         img-top
         tag="article"
@@ -18,12 +18,14 @@
       </b-card>
     </div>
 
+    <Modal />
+
     <!-- Modal z dodatkową zawartością -->
     <b-modal v-if="modalData" size="xl" ref="my-modal" title hide-footer scrollable>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 col-md-6">
-            <img class="img-fluid" :src="modalData.image.original" :alt="modalData.name" />
+            <img class="img-large" :src="getFilmPoster(modalData)" :alt="modalData.name" />
           </div>
           <div class="col-12 col-md-6">
             <div class="d-flex flex-row justify-content-between">
@@ -140,10 +142,16 @@
 </template>
 
 <script>
-// import Modal from "./Modal.vue";
+import Modal from "./Modal.vue";
 export default {
   name: "Tiles",
   props: ["shows"],
+  components: { Modal },
+  watch: {
+    shows: function(newV, old) {
+      newV !== old ? this.$forceUpdate() : null
+    }
+  },
   data: () => {
     return {
       singleResult: [],
@@ -154,9 +162,6 @@ export default {
     };
   },
   methods: {
-    setTiles() {
-      console.log(this.singleResult);
-    },
     classObject() {
       if (this.modalData.rating.average === null) {
         return "none";
@@ -199,7 +204,10 @@ export default {
       }
     },
     getCharacterImage(data) {
-      return data?.character?.image?.medium || "/assets/logo.png";
+      return data?.image?.medium || data?.character?.image?.medium || "https://cdn.dribbble.com/users/1541938/screenshots/5315198/question-mark.png"
+    },
+    getFilmPoster(data) {
+      return data?.image?.original || "https://cdn.dribbble.com/users/1541938/screenshots/5315198/question-mark.png"
     }
   }
 };
@@ -209,6 +217,11 @@ export default {
 .card-whole {
   article div {
     transition: background-color, 0.2s;
+  }
+  img {
+    min-width: 210px;
+    height: 295px;
+    background-color: lightgray;
   }
   &:hover {
     article div {
@@ -295,5 +308,10 @@ export default {
   &-name {
     font-size: 18px;
   }
+}
+
+.img-large {
+  width: 80%;
+  margin: auto 10%;
 }
 </style>

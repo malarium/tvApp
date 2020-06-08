@@ -20,7 +20,8 @@ export default {
   },
   methods: {
     setTiles() {
-      this.$emit("searchCommenced", this.searchResults);
+      this.$emit("searchCommenced", this.searchResults)
+      ;
     },
     setResults(data) {
       this.searchResults = [];
@@ -28,13 +29,13 @@ export default {
       this.setTiles();
     },
     runCheck(input) {
-      fetch(this.endpointQuery + input)
-        .then(blob => blob.json())
-        .then(data => this.setResults(data))
-        .catch(err => {
-          this.setResults(null);
-          return err;
-        });
+        fetch(this.endpointQuery + input)
+          .then(blob => blob.json())
+          .then(data => this.setResults(data))
+          .catch(err => {
+            this.setResults(null);
+            return err;
+          });
     }
   }
 };
@@ -49,7 +50,5 @@ input {
   border-radius: 3px;
   padding-left: 10px;
   outline: 0;
-  &:focus {
-  }
 }
 </style>

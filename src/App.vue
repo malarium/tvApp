@@ -1,10 +1,10 @@
 <template>
-	<div id="app">
-		<img alt="tv app logo" class="logo" src="./assets/tv.png" />
-		<Heading />
-		<Search @searchCommenced="searchCommenced" />
-		<Tiles :shows="showsAll" />
-	</div>
+  <div id="app">
+    <img alt="tv app logo" class="logo" src="./assets/tv.png" />
+    <Heading />
+    <Search @searchCommenced="searchCommenced" />
+    <Tiles :shows="showsAll" />
+  </div>
 </template>
 
 <script>
@@ -34,13 +34,14 @@
 	        });
 	    },
 	    searchCommenced(dataIncoming) {
-	      console.log('data incoming: ', dataIncoming)
-	      if (dataIncoming && dataIncoming.length > 0) {
-	        this.showsAll = [];
-	        this.showsAll = [...dataIncoming];
-	      } else {
-	        this.getShowsList();
-	      }
+			this.$nextTick(() => {
+			  if (dataIncoming && dataIncoming.length > 0) {
+				this.showsAll = [];
+				this.showsAll = [...dataIncoming];
+			  } else {
+				this.getShowsList();
+			  }
+			})
 	    }
 	  },
 	  beforeMount() {
@@ -50,16 +51,16 @@
 </script>
 
 <style lang="scss">
-	#app {
-		font-family: Avenir, Helvetica, Arial, sans-serif;
-		-webkit-font-smoothing: antialiased;
-		-moz-osx-font-smoothing: grayscale;
-		text-align: center;
-		color: #2c3e50;
-		background-color: #f5c17a;
-		padding-top: 60px;
-		.logo {
-			width: 140px;
-		}
-	}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  background-color: #f5c17a;
+  padding-top: 60px;
+  .logo {
+    width: 140px;
+  }
+}
 </style>
