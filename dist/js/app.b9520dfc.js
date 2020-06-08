@@ -1,23 +1,23 @@
 (function (t) {
 	function e(e) {
 		for (
-			var n, o, c = e[0], i = e[1], l = e[2], d = 0, f = [];
-			d < c.length;
+			var n, o, i = e[0], c = e[1], l = e[2], d = 0, f = [];
+			d < i.length;
 			d++
 		)
-			(o = c[d]),
+			(o = i[d]),
 				Object.prototype.hasOwnProperty.call(r, o) && r[o] && f.push(r[o][0]),
 				(r[o] = 0);
-		for (n in i) Object.prototype.hasOwnProperty.call(i, n) && (t[n] = i[n]);
+		for (n in c) Object.prototype.hasOwnProperty.call(c, n) && (t[n] = c[n]);
 		u && u(e);
 		while (f.length) f.shift()();
 		return s.push.apply(s, l || []), a();
 	}
 	function a() {
 		for (var t, e = 0; e < s.length; e++) {
-			for (var a = s[e], n = !0, c = 1; c < a.length; c++) {
-				var i = a[c];
-				0 !== r[i] && (n = !1);
+			for (var a = s[e], n = !0, i = 1; i < a.length; i++) {
+				var c = a[i];
+				0 !== r[c] && (n = !1);
 			}
 			n && (s.splice(e--, 1), (t = o((o.s = a[0]))));
 		}
@@ -76,17 +76,16 @@
 			return Object.prototype.hasOwnProperty.call(t, e);
 		}),
 		(o.p = "/");
-	var c = (window["webpackJsonp"] = window["webpackJsonp"] || []),
-		i = c.push.bind(c);
-	(c.push = e), (c = c.slice());
-	for (var l = 0; l < c.length; l++) e(c[l]);
-	var u = i;
+	var i = (window["webpackJsonp"] = window["webpackJsonp"] || []),
+		c = i.push.bind(i);
+	(i.push = e), (i = i.slice());
+	for (var l = 0; l < i.length; l++) e(i[l]);
+	var u = c;
 	s.push([0, "chunk-vendors"]), a();
 })({
 	0: function (t, e, a) {
 		t.exports = a("56d7");
 	},
-	"4aa8": function (t, e, a) {},
 	"56d7": function (t, e, a) {
 		"use strict";
 		a.r(e);
@@ -113,13 +112,13 @@
 			},
 			s = [],
 			o = (a("d3b7"), a("2909")),
-			c = function () {
+			i = function () {
 				var t = this,
 					e = t.$createElement;
 				t._self._c;
 				return t._m(0);
 			},
-			i = [
+			c = [
 				function () {
 					var t = this,
 						e = t.$createElement,
@@ -130,7 +129,7 @@
 			l = { name: "Heading" },
 			u = l,
 			d = (a("f90e"), a("2877")),
-			f = Object(d["a"])(u, c, i, !1, null, "47ab1088", null),
+			f = Object(d["a"])(u, i, c, !1, null, "47ab1088", null),
 			h = f.exports,
 			m = function () {
 				var t = this,
@@ -152,7 +151,7 @@
 				]);
 			},
 			p = [],
-			g =
+			b =
 				(a("d81d"),
 				{
 					name: "Search",
@@ -188,8 +187,8 @@
 						},
 					},
 				}),
-			b = g,
-			v = (a("823d"), Object(d["a"])(b, m, p, !1, null, "6805b251", null)),
+			g = b,
+			v = (a("823d"), Object(d["a"])(g, m, p, !1, null, "6805b251", null)),
 			w = v.exports,
 			_ = function () {
 				var t = this,
@@ -238,7 +237,6 @@
 								1
 							);
 						}),
-						a("Modal"),
 						t.modalData
 							? a(
 									"b-modal",
@@ -585,21 +583,9 @@
 				);
 			},
 			C = [],
-			y = function () {
-				var t = this,
-					e = t.$createElement,
-					a = t._self._c || e;
-				return a("h1", [t._v("HRLLO")]);
-			},
-			x = [],
-			j = { name: "Modal" },
-			k = j,
-			D = Object(d["a"])(k, y, x, !1, null, "69a71cd9", null),
-			O = D.exports,
-			I = {
+			y = {
 				name: "Tiles",
 				props: ["shows"],
-				components: { Modal: O },
 				watch: {
 					shows: function (t, e) {
 						t !== e && this.$forceUpdate();
@@ -700,12 +686,12 @@
 					},
 				},
 			},
-			M = I,
-			S = (a("7386"), Object(d["a"])(M, _, C, !1, null, "6ef3ac00", null)),
-			T = S.exports,
-			P = {
+			x = y,
+			j = (a("b905"), Object(d["a"])(x, _, C, !1, null, "5f988660", null)),
+			k = j.exports,
+			D = {
 				name: "App",
-				components: { Heading: h, Search: w, Tiles: T },
+				components: { Heading: h, Search: w, Tiles: k },
 				data: function () {
 					return { showsAll: [], dataIncoming: !1 };
 				},
@@ -733,27 +719,21 @@
 					this.getShowsList();
 				},
 			},
-			R = P,
-			$ = (a("5c0b"), Object(d["a"])(R, r, s, !1, null, null, null)),
-			A = $.exports,
-			L = a("5f5b");
+			I = D,
+			O = (a("5c0b"), Object(d["a"])(I, r, s, !1, null, null, null)),
+			M = O.exports,
+			S = a("5f5b");
 		(n["default"].config.productionTip = !1),
-			n["default"].use(L["a"]),
+			n["default"].use(S["a"]),
 			new n["default"]({
 				render: function (t) {
-					return t(A);
+					return t(M);
 				},
 			}).$mount("#app");
 	},
 	"5c0b": function (t, e, a) {
 		"use strict";
 		var n = a("9c0c"),
-			r = a.n(n);
-		r.a;
-	},
-	7386: function (t, e, a) {
-		"use strict";
-		var n = a("4aa8"),
 			r = a.n(n);
 		r.a;
 	},
@@ -764,10 +744,17 @@
 		r.a;
 	},
 	"9c0c": function (t, e, a) {},
+	b905: function (t, e, a) {
+		"use strict";
+		var n = a("e9ea"),
+			r = a.n(n);
+		r.a;
+	},
 	befb: function (t, e, a) {
 		t.exports = "img/tv.39ae447a.png";
 	},
 	de7b: function (t, e, a) {},
+	e9ea: function (t, e, a) {},
 	f6aa: function (t, e, a) {},
 	f90e: function (t, e, a) {
 		"use strict";
@@ -776,4 +763,4 @@
 		r.a;
 	},
 });
-//# sourceMappingURL=app.e89b8c51.js.map
+//# sourceMappingURL=app.b9520dfc.js.map

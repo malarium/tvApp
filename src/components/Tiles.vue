@@ -140,11 +140,9 @@
 </template>
 
 <script>
-import Modal from "./Modal.vue";
 export default {
   name: "Tiles",
   props: ["shows"],
-  components: { Modal },
   watch: {
     shows: function(newV, old) {
       newV !== old ? this.$forceUpdate() : null
