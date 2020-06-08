@@ -18,8 +18,6 @@
       </b-card>
     </div>
 
-    <Modal />
-
     <!-- Modal z dodatkową zawartością -->
     <b-modal v-if="modalData" size="xl" ref="my-modal" title hide-footer scrollable>
       <div class="container-fluid">
