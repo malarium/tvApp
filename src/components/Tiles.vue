@@ -3,7 +3,7 @@
     <div v-for="show in shows" :key="show.id" class="p-2 card-whole">
       <b-card
         :title="show.name"
-        :img-src="show.image.medium"
+        :img-src="show.image.medium || null"
         :img-alt="show.name"
         img-top
         tag="article"
@@ -58,8 +58,8 @@
             <a
               :href="'https://www.imdb.com/title/'+ modalData.externals.imdb"
               target="_blank"
-              class="mb-2 d-inline-block IMDB"
-            >Zobacz na IMDb</a>
+              class="mb-3 d-inline-block IMDB"
+            >See at IMDb</a>
 
             <!-- Rozwijane informacje -->
             <div role="tablist">
@@ -79,10 +79,14 @@
                   class="accordion-tabpanel"
                 >
                   <b-card-body class="row flex-nowrap mx-0">
-                    <b-card-text class="col-6" v-for="castSingle of castInfo" :key="castSingle.id">
+                    <b-card-text
+                      class="col-6 pb-0 mb-0"
+                      v-for="castSingle of castInfo"
+                      :key="castSingle.id"
+                    >
                       <figure>
                         <img class="img-fluid" :src="getCharacterImage(castSingle)" />
-                        <figcaption class="text-center">
+                        <figcaption class="text-center mt-2">
                           <a
                             :href="castSingle.person.url"
                             target="_blank"
@@ -111,14 +115,18 @@
                   role="tabpanel"
                   class="accordion-tabpanel"
                 >
-                  <b-card-body class="row flex-nowrap mx-0">
-                    <b-card-text class="col-6" v-for="crewPerson in crewInfo" :key="crewPerson.id">
-                      <p class="text-center">{{ crewPerson.type }}</p>
+                  <b-card-body class="row flex-nowrap flex-column mx-0">
+                    <b-card-text
+                      class="col-12 crewMember mb-0"
+                      v-for="crewPerson in crewInfo"
+                      :key="crewPerson.id"
+                    >
+                      <span class="crewMember-type">{{ crewPerson.type }} -</span>
                       <a
                         :href="crewPerson.person.url"
                         target="_blank"
-                        class="text-center d-inline-block w-100 mt-2 character-crewMember"
-                      >{{ crewPerson.person.name }}</a>
+                        class="d-inline w-100 mt-2 crewMember-character"
+                      >&nbsp;{{ crewPerson.person.name }}</a>
                     </b-card-text>
                   </b-card-body>
                 </b-collapse>
@@ -168,7 +176,6 @@ export default {
         .then(blob => blob.json())
         .then(data => {
           this.modalData = data;
-          console.log(data);
           this.$nextTick(() => {
             this.showModal = true;
             this.$refs["my-modal"].show();
@@ -180,10 +187,7 @@ export default {
       if (e.target.classList.contains("not-collapsed")) {
         return fetch(`https://api.tvmaze.com/shows/${id}/cast`)
           .then(blob => blob.json())
-          .then(data => {
-            console.log(data);
-            this.castInfo = data;
-          });
+          .then(data => (this.castInfo = data));
       }
     },
     getCrewInfo(e, id) {
@@ -191,10 +195,7 @@ export default {
       if (e.target.classList.contains("not-collapsed")) {
         return fetch(`https://api.tvmaze.com/shows/${id}/crew`)
           .then(blob => blob.json())
-          .then(data => {
-            console.log(data);
-            this.crewInfo = data;
-          });
+          .then(data => (this.crewInfo = data));
       }
     },
     getCharacterImage(data) {
@@ -211,7 +212,7 @@ export default {
   }
   &:hover {
     article div {
-      background-color: lightcoral;
+      background-color: #ff637b;
     }
   }
   .card-body {
@@ -273,6 +274,26 @@ export default {
   &:hover,
   &:visited {
     text-decoration: none;
+  }
+}
+.crewMember {
+  font-size: 18px;
+  &-type {
+    font-weight: bold;
+  }
+  &-character {
+    &:link,
+    &:hover,
+    &:visited {
+      text-decoration: none;
+    }
+  }
+}
+
+.character {
+  &-actor,
+  &-name {
+    font-size: 18px;
   }
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
+    <img alt="tv app logo" class="logo" src="./assets/tv.png" />
     <Heading />
-    <Search />
+    <Search @searchCommenced="searchCommenced" />
     <Tiles :shows="showsAll" />
   </div>
 </template>
@@ -21,14 +21,26 @@ export default {
   },
   data: () => {
     return {
-      showsAll: []
+      showsAll: [],
+      dataIncoming: false
     };
   },
   methods: {
     getShowsList() {
       return fetch("https://api.tvmaze.com/shows")
         .then(blob => blob.json())
-        .then(data => (this.showsAll = data));
+        .then(data => {
+          this.showsAll = data;
+        });
+    },
+    searchCommenced(dataIncoming) {
+      if (dataIncoming && dataIncoming.length > 0) {
+        this.showsAll = [];
+        this.showsAll = [...dataIncoming];
+        console.log(this.showsAll);
+      } else {
+        this.getShowsList();
+      }
     }
   },
   beforeMount() {
@@ -44,6 +56,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color: #f5c17a;
+  padding-top: 60px;
+  .logo {
+    width: 140px;
+  }
 }
 </style>
