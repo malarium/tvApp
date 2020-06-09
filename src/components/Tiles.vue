@@ -164,7 +164,7 @@ export default {
       } else if (this.modalData.rating.average < 5) {
         return "poor";
       } else if (
-        this.modalData.rating.average > 5 &&
+        this.modalData.rating.average >= 5 &&
         this.modalData.rating.average < 7.5
       ) {
         return "avg";
