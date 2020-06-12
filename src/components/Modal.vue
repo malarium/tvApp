@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal v-model="open" id="modal-1" v-if="modalData" size="xl" title hide-footer scrollable>
+    <b-modal v-model="open" v-if="modalData" size="xl" title hide-footer scrollable>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 col-md-6">
