@@ -3,7 +3,8 @@
     <img alt="tv app logo" class="logo" src="./assets/tv.png" />
     <Heading />
     <Search @searchCommenced="searchCommenced" />
-    <Tiles :shows="showsAll" />
+    <Modal :modalData="singleShow" :open="open" />
+    <Tiles :shows="showsAll" @openModal="openModal" />
   </div>
 </template>
 
@@ -11,18 +12,22 @@
 	import Heading from "./components/Heading.vue";
 	import Search from "./components/Search.vue";
 	import Tiles from "./components/Tiles.vue";
+	import Modal from "./components/Modal.vue";
 
 	export default {
 	  name: "App",
 	  components: {
 	    Heading,
 	    Search,
-	    Tiles
+		Tiles,
+		Modal
 	  },
 	  data: () => {
 	    return {
 	      showsAll: [],
-	      dataIncoming: false
+		  dataIncoming: false,
+		  singleShow: null,
+		  open: false
 	    };
 	  },
 	  methods: {
@@ -42,7 +47,11 @@
 				this.getShowsList();
 			  }
 			})
-	    }
+		},
+		openModal(showData) {
+			this.singleShow = showData
+			this.open = true
+		}
 	  },
 	  beforeMount() {
 	    this.getShowsList();
