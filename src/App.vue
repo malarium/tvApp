@@ -3,7 +3,7 @@
     <img alt="tv app logo" class="logo" src="./assets/tv.png" />
     <Heading />
     <Search @searchCommenced="searchCommenced" />
-    <Modal :modalData="singleShow" :open="open" />
+    <Modal :modalData="singleShow" />
     <Tiles :shows="showsAll" @openModal="openModal" />
   </div>
 </template>
@@ -26,8 +26,7 @@
 	    return {
 	      showsAll: [],
 		  dataIncoming: false,
-		  singleShow: null,
-		  open: false
+		  singleShow: null
 	    };
 	  },
 	  methods: {
@@ -50,7 +49,6 @@
 		},
 		openModal(showData) {
 			this.singleShow = showData
-			this.open = true
 		}
 	  },
 	  beforeMount() {

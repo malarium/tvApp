@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal v-model="open" v-if="modalData" size="xl" title hide-footer scrollable>
+    <b-modal v-model="openModal" v-if="modalData" size="xl" title hide-footer scrollable>
       <div class="container-fluid">
         <div class="row">
           <div class="col-12 col-md-6">
@@ -123,25 +123,15 @@
 <script>
 export default {
   name: "Modal",
-  props: ["modalData", "open"],
+  props: ["modalData"],
   data: () => {
       return {
           castInfo: null,
-          crewInfo: null
+          crewInfo: null,
+          openModal: false
       }
   },
   methods: {
-      showMore(id) {
-      return fetch(`https://api.tvmaze.com/shows/${id}`)
-        .then(blob => blob.json())
-        .then(data => {
-          this.modalData = data;
-          this.$nextTick(() => {
-            this.showModal = true;
-            this.$refs["my-modal"].show();
-          });
-        });
-    },
     getCastInfo(e, id) {
       this.castInfo = null;
       if (e.target.classList.contains("not-collapsed")) {
@@ -178,45 +168,16 @@ export default {
         return "good";
       }
     }
+  },
+  watch: {
+    modalData(n, o) {
+      n != o ? this.openModal = true : this.openModal = false
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
-.card-whole {
-  article div {
-    transition: background-color, 0.2s;
-  }
-  img {
-    min-width: 210px;
-    height: 295px;
-    background-color: lightgray;
-  }
-  &:hover {
-    article div {
-      background-color: #ff637b;
-    }
-  }
-  .card-body {
-    height: 170px;
-    display: flex;
-    flex-flow: column;
-    justify-content: space-around;
-    .card-title {
-      font-size: 1.3rem;
-      font-family: "Arvo", serif;
-    }
-    .card-text {
-      p {
-        margin-bottom: 5px;
-      }
-    }
-  }
-
-  .cursor-pointer {
-    cursor: pointer;
-  }
-}
 .accordion-tabpanel {
   overflow-x: auto;
 }

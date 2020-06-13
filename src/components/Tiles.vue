@@ -46,8 +46,6 @@ export default {
           this.modalData = data;
           this.$nextTick(() => {
             this.$emit("openModal", this.modalData)
-            // this.showModal = true;
-            // this.$refs["my-modal"].show();
           });
         });
     },
@@ -59,104 +57,38 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .card-whole {
-//   article div {
-//     transition: background-color, 0.2s;
-//   }
-//   img {
-//     min-width: 210px;
-//     height: 295px;
-//     background-color: lightgray;
-//   }
-//   &:hover {
-//     article div {
-//       background-color: #ff637b;
-//     }
-//   }
-//   .card-body {
-//     height: 170px;
-//     display: flex;
-//     flex-flow: column;
-//     justify-content: space-around;
-//     .card-title {
-//       font-size: 1.3rem;
-//       font-family: "Arvo", serif;
-//     }
-//     .card-text {
-//       p {
-//         margin-bottom: 5px;
-//       }
-//     }
-//   }
+.card-whole {
+  article div {
+    transition: background-color, 0.2s;
+  }
+  img {
+    min-width: 210px;
+    height: 295px;
+    background-color: lightgray;
+  }
+  &:hover {
+    article div {
+      background-color: #ff637b;
+    }
+  }
+  .card-body {
+    height: 170px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    .card-title {
+      font-size: 1.3rem;
+      font-family: "Arvo", serif;
+    }
+    .card-text {
+      p {
+        margin-bottom: 5px;
+      }
+    }
+  }
 
-//   .cursor-pointer {
-//     cursor: pointer;
-//   }
-// }
-// .accordion-tabpanel {
-//   overflow-x: auto;
-// }
-// .showRating {
-//   display: inline-block;
-//   &:before {
-//     content: "\2605";
-//     font-size: 24px;
-//   }
-//   &.poor {
-//     &:before {
-//       color: red;
-//     }
-//   }
-//   &.avg {
-//     &:before {
-//       color: orange;
-//     }
-//   }
-//   &.good {
-//     &:before {
-//       color: green;
-//     }
-//   }
-//   &.none {
-//     &:before {
-//       content: "\2606";
-//     }
-//   }
-// }
-// .IMDB {
-//   background-color: #efc200;
-//   font-weight: bold;
-//   color: black;
-//   padding: 10px 20px;
-//   &:link,
-//   &:hover,
-//   &:visited {
-//     text-decoration: none;
-//   }
-// }
-// .crewMember {
-//   font-size: 18px;
-//   &-type {
-//     font-weight: bold;
-//   }
-//   &-character {
-//     &:link,
-//     &:hover,
-//     &:visited {
-//       text-decoration: none;
-//     }
-//   }
-// }
-
-// .character {
-//   &-actor,
-//   &-name {
-//     font-size: 18px;
-//   }
-// }
-
-// .img-large {
-//   width: 80%;
-//   margin: auto 10%;
-// }
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}
 </style>
