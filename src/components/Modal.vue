@@ -49,9 +49,12 @@
                   header-tag="header"
                   class="p-1"
                   role="tab"
-                  @click="getCastInfo($event, modalData.id)"
+                  :class="{'disabled' : castInfo && !castInfo.length}"
                 >
-                  <b-button block v-b-toggle.accordion-1 variant="light">CAST</b-button>
+                  <b-button block v-b-toggle.accordion-1 variant="light">
+                    <span v-if="castInfo && castInfo.length">CAST</span>
+                    <span v-else>CAST (no info available)</span>
+                  </b-button>
                 </b-card-header>
                 <b-collapse
                   id="accordion-1"
@@ -59,7 +62,7 @@
                   role="tabpanel"
                   class="accordion-tabpanel"
                 >
-                  <b-card-body class="row flex-nowrap mx-0">
+                  <b-card-body class="row flex-nowrap mx-0" v-if="castInfo">
                     <b-card-text
                       class="col-6 pb-0 mb-0"
                       v-for="castSingle of castInfo"
@@ -78,6 +81,9 @@
                       <p class="text-center character-name">{{ castSingle.character.name }}</p>
                     </b-card-text>
                   </b-card-body>
+                  <b-card-body v-else>
+                    <b-card-text class="col-6 pb-0 mb-0">Sorry, no data</b-card-text>
+                  </b-card-body>
                 </b-collapse>
               </b-card>
 
@@ -86,9 +92,12 @@
                   header-tag="header"
                   class="p-1"
                   role="tab"
-                  @click="getCrewInfo($event, modalData.id)"
+                  :class="{'disabled' : crewInfo && !crewInfo.length}"
                 >
-                  <b-button block v-b-toggle.accordion-2 variant="light">CREW</b-button>
+                  <b-button block v-b-toggle.accordion-2 variant="light">
+                    <span v-if="crewInfo && crewInfo.length">CREW</span>
+                    <span v-else>CREW (no info available)</span>
+                  </b-button>
                 </b-card-header>
                 <b-collapse
                   id="accordion-2"
@@ -96,7 +105,7 @@
                   role="tabpanel"
                   class="accordion-tabpanel"
                 >
-                  <b-card-body class="row flex-nowrap flex-column mx-0">
+                  <b-card-body class="row flex-nowrap flex-column mx-0" v-if="crewInfo">
                     <b-card-text
                       class="col-12 crewMember mb-0"
                       v-for="crewPerson in crewInfo"
@@ -109,6 +118,9 @@
                         class="d-inline w-100 mt-2 crewMember-character"
                       >&nbsp;{{ crewPerson.person.name }}</a>
                     </b-card-text>
+                  </b-card-body>
+                  <b-card-body v-else>
+                    <b-card-text class="col-6 pb-0 mb-0">Sorry, no data</b-card-text>
                   </b-card-body>
                 </b-collapse>
               </b-card>
@@ -132,21 +144,17 @@ export default {
       }
   },
   methods: {
-    getCastInfo(e, id) {
+    getCastInfo(id) {
       this.castInfo = null;
-      if (e.target.classList.contains("not-collapsed")) {
         return fetch(`https://api.tvmaze.com/shows/${id}/cast`)
           .then(blob => blob.json())
           .then(data => (this.castInfo = data));
-      }
     },
-    getCrewInfo(e, id) {
+    getCrewInfo(id) {
       this.crewInfo = null;
-      if (e.target.classList.contains("not-collapsed")) {
         return fetch(`https://api.tvmaze.com/shows/${id}/crew`)
           .then(blob => blob.json())
           .then(data => (this.crewInfo = data));
-      }
     },
     getCharacterImage(data) {
       return data?.image?.medium || data?.character?.image?.medium || "https://cdn.dribbble.com/users/1541938/screenshots/5315198/question-mark.png"
@@ -172,6 +180,8 @@ export default {
   watch: {
     modalData(n, o) {
       n != o ? this.openModal = true : this.openModal = false
+      this.getCastInfo(n.id)
+      this.getCrewInfo(n.id)
     }
   }
 };
@@ -243,5 +253,9 @@ export default {
 .img-large {
   width: 80%;
   margin: auto 10%;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 </style>
