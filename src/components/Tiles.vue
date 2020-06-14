@@ -31,8 +31,6 @@ export default {
   },
   data: () => {
     return {
-      singleResult: [],
-      endpointQuery: "https://api.tvmaze.com/singlesearch/shows?q=",
       modalData: null,
       castInfo: null,
       crewInfo: null
